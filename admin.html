@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blackpearl Genz — Admin: Add Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .admin-wrap{ max-width:820px; margin:0 auto; padding:3rem 6vw 6rem; }
+  .admin-wrap h1{ margin-bottom:0.5rem; }
+  .admin-wrap > p.help{ color:var(--muted); margin-bottom:2.5rem; }
+
+  .field{ margin-bottom:1.4rem; }
+  .field label{
+    display:block; font-family:'JetBrains Mono', monospace; font-size:0.75rem;
+    letter-spacing:0.05em; text-transform:uppercase; color:var(--pearl); margin-bottom:0.4rem;
+  }
+  .field .hint{ color:var(--muted); font-size:0.78rem; margin-top:0.3rem; }
+  .field input, .field textarea{
+    width:100%; background:var(--surface); border:1px solid var(--stitch); color:var(--ink);
+    padding:0.7rem 0.8rem; border-radius:4px; font-family:'Space Grotesk', sans-serif; font-size:0.92rem;
+  }
+  .field textarea{ font-family:'JetBrains Mono', monospace; font-size:0.82rem; min-height:80px; resize:vertical; }
+  .field input:focus, .field textarea:focus{ outline:2px solid var(--pearl); outline-offset:1px; }
+
+  .fit-block{
+    border:1px dashed var(--stitch); border-radius:8px; padding:1.6rem; margin-bottom:1.6rem; position:relative;
+  }
+  .fit-block-title{ font-size:1.1rem; margin-bottom:1rem; }
+  .remove-fit{
+    position:absolute; top:1rem; right:1rem; background:transparent; border:1px solid var(--stitch);
+    color:var(--muted); font-family:'JetBrains Mono', monospace; font-size:0.7rem; padding:0.3rem 0.6rem;
+    border-radius:20px; cursor:pointer;
+  }
+  .remove-fit:hover{ border-color:#e37f7f; color:#e37f7f; }
+
+  .action-row{ display:flex; gap:1rem; flex-wrap:wrap; margin:2rem 0; }
+  .action-btn{
+    font-family:'JetBrains Mono', monospace; font-size:0.82rem; letter-spacing:0.05em; text-transform:uppercase;
+    padding:0.8rem 1.4rem; border-radius:4px; cursor:pointer; border:none;
+  }
+  .action-btn.primary{ background:var(--pearl); color:#0a0a0c; }
+  .action-btn.ghost{ background:transparent; border:1px solid var(--stitch); color:var(--ink); }
+  .action-btn.ghost:hover{ border-color:var(--pearl); color:var(--pearl); }
+
+  #output-wrap{ display:none; }
+  #output{
+    width:100%; min-height:340px; background:var(--surface); border:1px solid var(--stitch); color:var(--pearl);
+    font-family:'JetBrains Mono', monospace; font-size:0.8rem; padding:1.2rem; border-radius:6px; white-space:pre;
+    overflow-x:auto;
+  }
+  .copy-note{ color:var(--muted); font-size:0.8rem; margin-top:0.8rem; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand">
+    <img src="images/logo.png" alt="Blackpearl Genz" class="nav-logo-img">
+    <span class="nav-brand-name display">Blackpearl Genz</span>
+  </a>
+  <div class="nav-links"><a href="index.html">View Site</a></div>
+</nav>
+
+<div class="admin-wrap">
+  <h1 class="display">Add a Design</h1>
+  <p class="help">Fill this in for a new t-shirt design. When you click "Generate Code," copy the result and paste it into the <code class="mono">DESIGNS</code> array inside <code class="mono">products-data.js</code> (right where the comment says to add the next design).</p>
+
+  <div class="field">
+    <label>Design Code</label>
+    <input type="text" id="f-code" placeholder="BPG#002">
+  </div>
+  <div class="field">
+    <label>Design Name</label>
+    <input type="text" id="f-name" placeholder="Ocean Skull">
+  </div>
+  <div class="field">
+    <label>Card Price (shown on home page, ₹)</label>
+    <input type="number" id="f-cardprice" placeholder="130" min="0" step="1">
+    <div class="hint">Just one number — shown as "From ₹X" on the home page card. Set it to your cheapest fit's price, or whatever you like.</div>
+  </div>
+  <div class="field">
+    <label>Description</label>
+    <textarea id="f-desc" placeholder="Short line about this design..."></textarea>
+  </div>
+
+  <h3 style="margin:2rem 0 1rem;">Fits Available</h3>
+  <div id="fits-container"></div>
+
+  <div class="action-row">
+    <button class="action-btn ghost" onclick="addFit()">+ Add Another Fit</button>
+  </div>
+
+  <div class="action-row">
+    <button class="action-btn primary" onclick="generateCode()">Generate Code</button>
+  </div>
+
+  <div id="output-wrap">
+    <h3 style="margin-bottom:1rem;">Paste this into products-data.js:</h3>
+    <textarea id="output" readonly></textarea>
+    <div class="copy-note">Tap inside the box, select all (Ctrl/Cmd+A), and copy.</div>
+  </div>
+</div>
+
+<footer>Made in Tamil Nadu 🖤 — Admin Tool</footer>
+
+<script>
+  let fitCount = 0;
+
+  function addFit(prefill) {
+    fitCount++;
+    const id = fitCount;
+    const div = document.createElement('div');
+    div.className = 'fit-block';
+    div.id = `fit-${id}`;
+    div.innerHTML = `
+      <button class="remove-fit" onclick="document.getElementById('fit-${id}').remove()">Remove</button>
+      <div class="fit-block-title display">Fit #${id}</div>
+
+      <div class="field">
+        <label>Fit Name</label>
+        <input type="text" id="fit-${id}-name" placeholder="Oversized">
+      </div>
+      <div class="field">
+        <label>Subtitle</label>
+        <input type="text" id="fit-${id}-subtitle" placeholder="240 GSM French Terry">
+      </div>
+      <div class="field">
+        <label>Photos for this Fit (comma separated)</label>
+        <input type="text" id="fit-${id}-images" placeholder="images/bpg002-oversized-front.jpg, images/bpg002-oversized-back.jpg">
+        <div class="hint">These photos show ONLY when a customer selects this fit. First one is used as the home page cover if this is the first fit.</div>
+      </div>
+      <div class="field">
+        <label>Fixed Note</label>
+        <input type="text" id="fit-${id}-note" placeholder="Fixed at 240 GSM — no other weight available">
+      </div>
+      <div class="field">
+        <label>Colours (comma separated)</label>
+        <input type="text" id="fit-${id}-colours" placeholder="Black, White, Grey Melange">
+      </div>
+      <div class="field">
+        <label>Size Chart Image Filename</label>
+        <input type="text" id="fit-${id}-chart-image" placeholder="images/oversized-size-chart.jpg">
+      </div>
+      <div class="field">
+        <label>Size Chart Columns (comma separated)</label>
+        <input type="text" id="fit-${id}-columns" placeholder="Size, Chest, Length, Shoulder, Sleeve">
+      </div>
+      <div class="field">
+        <label>Size Chart Rows (one row per line, comma separated)</label>
+        <textarea id="fit-${id}-rows" placeholder="S, 44, 27, 20.5, 8.5&#10;M, 46, 28, 21.5, 9"></textarea>
+        <div class="hint">Each line = one size row, values in the same order as the columns above.</div>
+      </div>
+      <div class="field">
+        <label>Price for this Fit (₹)</label>
+        <input type="number" id="fit-${id}-price" placeholder="399" min="0" step="1">
+        <div class="hint">One price for this fit. If different sizes cost different amounts, use the size chart above just for measurements, and enter the base price here.</div>
+      </div>
+    `;
+    document.getElementById('fits-container').appendChild(div);
+  }
+
+  function generateCode() {
+    const code = document.getElementById('f-code').value.trim() || "BPG#XXX";
+    const name = document.getElementById('f-name').value.trim() || "Untitled Design";
+    const cardPrice = parseFloat(document.getElementById('f-cardprice').value);
+    if (!cardPrice || cardPrice <= 0) {
+      alert('Please enter a Card Price before generating code.');
+      return;
+    }
+    const desc = document.getElementById('f-desc').value.trim() || "";
+
+    const fitBlocks = document.querySelectorAll('.fit-block');
+    const fits = [];
+
+    fitBlocks.forEach(block => {
+      const id = block.id.split('-')[1];
+      const fitName = document.getElementById(`fit-${id}-name`).value.trim() || "Fit";
+      const subtitle = document.getElementById(`fit-${id}-subtitle`).value.trim() || "";
+      const images = document.getElementById(`fit-${id}-images`).value.split(',').map(s => s.trim()).filter(Boolean);
+      if (images.length === 0) images.push("images/placeholder.jpg");
+      const note = document.getElementById(`fit-${id}-note`).value.trim() || "";
+      const colours = document.getElementById(`fit-${id}-colours`).value.split(',').map(s => s.trim()).filter(Boolean);
+      const chartImage = document.getElementById(`fit-${id}-chart-image`).value.trim() || "";
+      const columns = document.getElementById(`fit-${id}-columns`).value.split(',').map(s => s.trim()).filter(Boolean);
+      const rowsRaw = document.getElementById(`fit-${id}-rows`).value.split('\n').map(l => l.trim()).filter(Boolean);
+      const rows = rowsRaw.map(line => line.split(',').map(v => {
+        const num = parseFloat(v.trim());
+        return isNaN(num) ? v.trim() : num;
+      }));
+      const priceValue = parseFloat(document.getElementById(`fit-${id}-price`).value);
+      if (!priceValue || priceValue <= 0) {
+        alert(`Please enter a price for the "${fitName}" fit before generating code.`);
+        throw new Error('missing price');
+      }
+      const priceTable = [{ label: "All Sizes", price: priceValue }];
+
+      fits.push({ fitName, subtitle, images, fixedNote: note, colours, sizeChartImage: chartImage, sizeChartColumns: columns, sizeChartRows: rows, priceTable });
+    });
+
+    const obj = {
+      code, name, cardPrice, description: desc, fits
+    };
+
+    const jsonStr = JSON.stringify(obj, null, 2);
+    // convert JSON to a slightly nicer JS-object-literal look (unquoted keys)
+    const jsStr = jsonStr.replace(/"([a-zA-Z_][a-zA-Z0-9_]*)":/g, '$1:');
+
+    document.getElementById('output').value = jsStr + ",";
+    document.getElementById('output-wrap').style.display = 'block';
+    document.getElementById('output-wrap').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // start with one fit block by default
+  addFit();
+</script>
+
+</body>
+</html>

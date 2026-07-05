@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blackpearl Genz — Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand">
+    <img src="images/logo.png" alt="Blackpearl Genz" class="nav-logo-img">
+    <span class="nav-brand-name display">Blackpearl Genz</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html#designs">Designs</a>
+    <div class="nav-social">
+      <a href="https://www.instagram.com/blackpearl_genz?igsh=N2E1bndnd2pka25q" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="0.6" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://youtube.com/@blackpearlgenz?si=UYn14PwFOhKcUYk9" target="_blank" rel="noopener" class="social-btn" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://wa.me/919363555927" target="_blank" rel="noopener" class="social-btn" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a9 9 0 00-7.8 13.5L3 21l4.7-1.2A9 9 0 1012 3z"/><path d="M8.5 9.5c.3 2.6 2.4 4.7 5 5" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<a href="https://wa.me/919363555927" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a9 9 0 00-7.8 13.5L3 21l4.7-1.2A9 9 0 1012 3z"/><path d="M8.5 9.5c.3 2.6 2.4 4.7 5 5" stroke-linecap="round"/></svg>
+</a>
+
+<div id="detail-root"></div>
+
+<footer>
+  <div class="footer-links">
+    <a href="https://www.instagram.com/blackpearl_genz?igsh=N2E1bndnd2pka25q" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://youtube.com/@blackpearlgenz?si=UYn14PwFOhKcUYk9" target="_blank" rel="noopener">YouTube</a>
+    <a href="https://wa.me/919363555927" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+  <div class="footer-note">Made in Tamil Nadu 🖤 — DTF printed, order by order</div>
+</footer>
+
+<script src="products-data.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code');
+  const design = DESIGNS.find(d => d.code === code);
+  const root = document.getElementById('detail-root');
+  let activeFitIndex = 0;
+
+  let activeImageIndex = 0;
+
+  if (!design) {
+    root.innerHTML = `
+      <div class="detail" style="grid-template-columns:1fr;text-align:center;">
+        <div>
+          <a href="index.html" class="back-link">&larr; Back to catalog</a>
+          <h1 class="display">Design not found</h1>
+          <p style="color:var(--muted);margin-top:1rem;">This design isn't in the catalog. Head back and pick one from the list.</p>
+        </div>
+      </div>
+    `;
+  } else {
+    document.title = `${design.code} — Blackpearl Genz`;
+    render();
+  }
+
+  function render() {
+    const fit = design.fits[activeFitIndex];
+
+    const specHeader = '<tr>' + fit.sizeChartColumns.map(c => `<th>${c}</th>`).join('') + '</tr>';
+    const specRows = fit.sizeChartRows.map(row =>
+      '<tr>' + row.map(cell => `<td>${cell}</td>`).join('') + '</tr>'
+    ).join('');
+
+    const chips = fit.colours.map(c => `<span class="chip">${c}</span>`).join('');
+
+    const fitTabs = design.fits.map((f, i) =>
+      `<button class="fit-tab ${i === activeFitIndex ? 'active' : ''}" onclick="setFit(${i})">${f.fitName}</button>`
+    ).join('');
+
+    const fitPrice = Math.min(...fit.priceTable.map(row => row.price));
+
+    const orderLink = buildOrderLink(design, fit.fitName);
+
+    const thumbs = fit.images.map((img, i) =>
+      `<div class="thumb ${i === activeImageIndex ? 'active' : ''}" onclick="setImage(${i})">
+         <img src="${img}" alt="${design.code} ${fit.fitName} photo ${i + 1}" onerror="this.parentElement.style.display='none';">
+       </div>`
+    ).join('');
+
+    root.innerHTML = `
+      <div class="detail">
+        <div>
+          <a href="index.html" class="back-link">&larr; Back to catalog</a>
+          <div class="detail-image">
+            <img src="${fit.images[activeImageIndex]}" alt="${design.code} ${fit.fitName}"
+                 onerror="this.parentElement.innerHTML='Add ${fit.fitName} photo here';">
+          </div>
+          ${fit.images.length > 1 ? `<div class="thumb-row">${thumbs}</div>` : ''}
+        </div>
+        <div>
+          <a href="index.html" class="back-link" style="visibility:hidden;">&larr; Back to catalog</a>
+          <h1 class="detail-name display">${design.code}</h1>
+          <div class="detail-sub">${design.name}</div>
+
+          <h3>Choose Fit</h3>
+          <div class="fit-tab-row">${fitTabs}</div>
+
+          <div class="price-big-wrap">
+            <div class="price-big-label">${fit.fitName} — Price</div>
+            <div class="price-big">₹${fitPrice}</div>
+          </div>
+
+          <p class="detail-desc">${design.description}</p>
+          <div class="detail-note">// ${fit.fixedNote}</div>
+
+          <h3>Available Colours</h3>
+          <div class="chip-row">${chips}</div>
+
+          <h3>Size Chart (inches)</h3>
+          <table class="spec">${specHeader}${specRows}</table>
+          ${fit.sizeChartImage ? `<img class="size-chart-img" src="${fit.sizeChartImage}" alt="${fit.fitName} size chart" onerror="this.style.display='none';">` : ''}
+
+          <a class="btn btn-primary" href="${orderLink}" target="_blank" rel="noopener">Place Order — ${fit.fitName}</a>
+        </div>
+      </div>
+    `;
+  }
+
+  function setFit(i) {
+    activeFitIndex = i;
+    activeImageIndex = 0;
+    render();
+  }
+
+  function setImage(i) {
+    activeImageIndex = i;
+    render();
+  }
+</script>
+
+</body>
+</html>
