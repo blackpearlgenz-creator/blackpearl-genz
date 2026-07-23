@@ -12,7 +12,7 @@ const DESIGNS = [
   {
     code: "BPG#001",
     name: "THALAPATHY BLASTU",
-    cardPrice: 450,
+    cardPrice: 400,
     description: "Thalapathy blastu design is fully customized design by blackpearl genz...",
     fits: [
       {
@@ -40,7 +40,7 @@ const DESIGNS = [
         priceTable: [
           {
             label: "All Sizes",
-            price: 450
+            price: 400
           }
         ]
       },
@@ -64,7 +64,7 @@ const DESIGNS = [
         priceTable: [
           {
             label: "All Sizes",
-            price: 550
+            price: 500
           }
         ]
       }
