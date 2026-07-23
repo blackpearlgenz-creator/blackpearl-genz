@@ -16,6 +16,10 @@
     <img src="images/logo.png" alt="Blackpearl Genz" class="nav-logo-img">
     <span class="nav-brand-name display">Blackpearl Genz</span>
   </a>
+  <div class="nav-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="search-icon"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3" stroke-linecap="round"/></svg>
+    <input type="text" id="design-search" placeholder="Search designs..." autocomplete="off">
+  </div>
   <div class="nav-links">
     <a href="#designs">Designs</a>
     <div class="nav-social">
@@ -45,6 +49,7 @@
 
 <section class="grid-section" id="designs">
   <div class="product-grid" id="product-grid"></div>
+  <div id="no-results" class="no-results" style="display:none;">No designs match your search.</div>
 </section>
 
 <footer>
@@ -64,6 +69,7 @@
     const card = document.createElement('a');
     card.href = `product.html?code=${encodeURIComponent(d.code)}`;
     card.className = 'card reveal';
+    card.dataset.search = `${d.code} ${d.name} ${d.description}`.toLowerCase();
     card.style.transitionDelay = `${index * 80}ms`;
 
     card.innerHTML = `
@@ -107,6 +113,20 @@
     });
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Live search filter
+  const searchInput = document.getElementById('design-search');
+  const noResults = document.getElementById('no-results');
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.trim().toLowerCase();
+    let visibleCount = 0;
+    document.querySelectorAll('.card').forEach(card => {
+      const matches = !query || card.dataset.search.includes(query);
+      card.style.display = matches ? '' : 'none';
+      if (matches) visibleCount++;
+    });
+    noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+  });
 
   initWhatsAppLinks();
 </script>
