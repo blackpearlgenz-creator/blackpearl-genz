@@ -70,6 +70,35 @@ const DESIGNS = [
       }
     ]
   },
+  {
+    code: "BPG#002",
+    name: "STR JESUS",
+    cardPrice: 499,
+    description: "customized str jesus style design, dtf printed t shirts...\n#simbu #str #silambarasan",
+    fits: [
+      {
+        fitName: "Oversized",
+        subtitle: "240 GSM",
+        images: [
+          "images/1.jpg",
+          "images/2.jpg"
+        ],
+        fixedNote: "",
+        colours: [
+          "Red"
+        ],
+        sizeChartImage: "images/11.jpg",
+        sizeChartColumns: [],
+        sizeChartRows: [],
+        priceTable: [
+          {
+            label: "All Sizes",
+            price: 499
+          }
+        ]
+      }
+    ]
+  },
 
   // Add your next design here — use admin.html to generate this block.
 ];
