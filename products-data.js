@@ -70,6 +70,7 @@ const DESIGNS = [
       }
     ]
   },
+
   // Add your next design here — use admin.html to generate this block.
 ];
 
@@ -91,20 +92,38 @@ function getPricePerFit(design) {
   });
 }
 
-// The Google Form used for ALL designs.
-const ORDER_FORM = {
-  baseUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfVRAgWSyeaqYhDvi5yVwqxlhTd7oHrn374qremdWnPwPgyag/viewform?usp=dialog",
-  // Replace with the entry.XXXXXXXXX id from YOUR form's "T-shirt model
-  // name" question. Find it via the form's ⋮ menu -> "Get pre-filled link".
-  entryIds: {
-    modelName: "BPG#001"
-  }
+// ============================================================
+// WHATSAPP ORDERING
+// Set your number ONCE here — it's used for the "Place Order"
+// buttons AND every WhatsApp icon/footer link/floating button
+// across the site (they all read from this single value).
+// Format: country code + number, no +, no spaces, no dashes.
+// Example: India number 98765 43210 -> "919876543210"
+// ============================================================
+const WHATSAPP_CONFIG = {
+  phoneNumber: "91YOURNUMBER"
 };
 
-// Builds a pre-filled Google Form link with "DESIGN CODE - FIT NAME"
-// already typed into the model name field.
-function buildOrderLink(design, fitName) {
-  const params = new URLSearchParams();
-  params.set(ORDER_FORM.entryIds.modelName, `${design.code} - ${fitName}`);
-  return `${ORDER_FORM.baseUrl}?${params.toString()}`;
+// Builds the WhatsApp link for a specific design + fit, with the
+// order details already typed into the message box.
+function buildWhatsAppOrderLink(design, fit, price) {
+  const message =
+    `Hi! I'd like to order:
+
+Design: ${design.code} - ${design.name}
+Fit: ${fit.fitName} (${fit.subtitle})
+Price: From ₹${price}
+
+Please share the next steps to confirm my order.`;
+
+  return `https://wa.me/${WHATSAPP_CONFIG.phoneNumber}?text=${encodeURIComponent(message)}`;
+}
+
+// Wires up every generic WhatsApp link on the page (nav icon, footer
+// link, floating button) to the same phone number above. Call this
+// once after the page loads.
+function initWhatsAppLinks() {
+  document.querySelectorAll('.wa-link').forEach(el => {
+    el.href = `https://wa.me/${WHATSAPP_CONFIG.phoneNumber}`;
+  });
 }
