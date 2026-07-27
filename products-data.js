@@ -80,20 +80,20 @@ const DESIGNS = [
         fitName: "Oversized",
         subtitle: "240 GSM",
         images: [
-          "images/str1.jpg",
-          "images/str2.jpg"
+          "images/str1.png",
+          "images/str2.png"
         ],
         fixedNote: "Add some shipping charges after confirmation... eg.Rs.450+shipping(50)...total cost Rs.500... cash on delivery not available. only prepaid...",
         colours: [
           "Red"
         ],
-        sizeChartImage: "images/11.jpg",
+        sizeChartImage: "images/11.png",
         sizeChartColumns: [],
         sizeChartRows: [],
         priceTable: [
           {
             label: "All Sizes",
-            price: 460
+            price: 450
           }
         ]
       }
