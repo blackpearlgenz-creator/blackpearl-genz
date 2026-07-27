@@ -73,7 +73,7 @@ const DESIGNS = [
   {
     code: "BPG#002",
     name: "STR JESUS",
-    cardPrice: 450,
+    cardPrice: 500,
     description: "Oversized t shirt with custom dtf design...str jesus style design..\nPremium quality cloth...High quality inks...\nboth front and back side printed...all sizes available",
     fits: [
       {
@@ -93,7 +93,36 @@ const DESIGNS = [
         priceTable: [
           {
             label: "All Sizes",
-            price: 450
+            price: 500
+          }
+        ]
+      }
+    ]
+  },
+  {
+    code: "BPG#003",
+    name: "AK RACER",
+    cardPrice: 500,
+    description: "Oversized t shirt with custom dtf design...AK RACER design...\nPremium quality cloth...High quality inks...\nboth front and back side printed...all sizes available...",
+    fits: [
+      {
+        fitName: "Oversized",
+        subtitle: "240 GSM",
+        images: [
+          "images/akfront.png",
+          "images/akback.png"
+        ],
+        fixedNote: "Add some shipping charges after confirmation... eg.Rs.450+shipping(50)...total cost Rs.500...cash on delivery not available...only prepaid...",
+        colours: [
+          "White"
+        ],
+        sizeChartImage: "images/11.png",
+        sizeChartColumns: [],
+        sizeChartRows: [],
+        priceTable: [
+          {
+            label: "All Sizes",
+            price: 500
           }
         ]
       }
