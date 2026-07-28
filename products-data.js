@@ -157,7 +157,7 @@ function getPricePerFit(design) {
 // Example: India number 98765 43210 -> "919876543210"
 // ============================================================
 const WHATSAPP_CONFIG = {
-  phoneNumber: "91YOURNUMBER"
+  phoneNumber: "919363555927"
 };
 
 // Builds the WhatsApp link for a specific design + fit, with the
