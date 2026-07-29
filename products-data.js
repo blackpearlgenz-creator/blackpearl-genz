@@ -128,6 +128,35 @@ const DESIGNS = [
       }
     ]
   },
+  {
+    code: "BPG#004",
+    name: "VETRIVEL",
+    cardPrice: 350,
+    description: "Oversized t shirt with custom dtf design...VETRIVEL design...Premium quality cloth...High quality inks...both front and back side printed...all sizes available...",
+    fits: [
+      {
+        fitName: "Oversized",
+        subtitle: "240 GSM",
+        images: [
+          "images/murugafront.png",
+          "images/murugaback.png"
+        ],
+        fixedNote: "// Add some shipping charges after confirmation... eg.Rs.350+shipping(50)...total cost Rs.400...cash on delivery not available...only prepaid...",
+        colours: [
+          "white"
+        ],
+        sizeChartImage: "images/11.png",
+        sizeChartColumns: [],
+        sizeChartRows: [],
+        priceTable: [
+          {
+            label: "All Sizes",
+            price: 350
+          }
+        ]
+      }
+    ]
+  },
 ];
 
 // Lowest price across every fit of a design — used on the home page card.
