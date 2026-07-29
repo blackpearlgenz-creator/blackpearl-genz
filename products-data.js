@@ -13,7 +13,7 @@ const DESIGNS = [
     code: "BPG#001",
     name: "THALAPATHY BLASTU",
     cardPrice: 350,
-    description: "Thalapathy blastu design is fully customized design by blackpearl genz...",
+    description: "Oversized t shirt with custom dtf design...THALAPATHY design... Premium quality cloth...High quality inks... both front and back side printed...all sizes available...#thalapathy #vijay #blastu #cmvijay #thalapathyvijay",
     fits: [
       {
         fitName: "RoundNeck",
@@ -24,7 +24,7 @@ const DESIGNS = [
           "images/7.png",
           "images/8.png"
         ],
-        fixedNote: "Fixed 180 GSM only",
+        fixedNote: "// Add some shipping charges after confirmation... eg.Rs.350+shipping(50)...total cost Rs.400...cash on delivery not available...only prepaid...",
         colours: [
           "Black",
           "White",
@@ -53,7 +53,7 @@ const DESIGNS = [
           "images/3.png",
           "images/4.png"
         ],
-        fixedNote: "Fixed 240 GSM only",
+        fixedNote: "// Add some shipping charges after confirmation... eg.Rs.350+shipping(50)...total cost Rs.400...cash on delivery not available...only prepaid...",
         colours: [
           "Black",
           "White"
@@ -74,7 +74,7 @@ const DESIGNS = [
     code: "BPG#002",
     name: "STR JESUS",
     cardPrice: 400,
-    description: "Oversized t shirt with custom dtf design...str jesus style design..\nPremium quality cloth...High quality inks...\nboth front and back side printed...all sizes available",
+    description: "Oversized t shirt with custom dtf design...str jesus style design..\nPremium quality cloth...High quality inks...\nboth front and back side printed...all sizes available...#str #simbu #silambarasan #jesus #atman",
     fits: [
       {
         fitName: "Oversized",
@@ -103,7 +103,7 @@ const DESIGNS = [
     code: "BPG#003",
     name: "AK RACER",
     cardPrice: 400,
-    description: "Oversized t shirt with custom dtf design...AK RACER design...\nPremium quality cloth...High quality inks...\nboth front and back side printed...all sizes available...",
+    description: "Oversized t shirt with custom dtf design...AK RACER design...\nPremium quality cloth...High quality inks...\nboth front and back side printed...all sizes available...#ajith #ajithkumar #thala",
     fits: [
       {
         fitName: "Oversized",
@@ -132,7 +132,7 @@ const DESIGNS = [
     code: "BPG#004",
     name: "VETRIVEL",
     cardPrice: 350,
-    description: "Oversized t shirt with custom dtf design...VETRIVEL design...Premium quality cloth...High quality inks...both front and back side printed...all sizes available...",
+    description: "Oversized t shirt with custom dtf design...VETRIVEL design...Premium quality cloth...High quality inks...both front and back side printed...all sizes available... #murugar #murugan",
     fits: [
       {
         fitName: "Oversized",
