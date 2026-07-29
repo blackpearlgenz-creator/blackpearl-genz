@@ -138,8 +138,8 @@ const DESIGNS = [
         fitName: "Oversized",
         subtitle: "240 GSM",
         images: [
-          "images/murugafront.png",
-          "images/murugaback.png"
+          "images/murugarfront.png",
+          "images/murugarback.png"
         ],
         fixedNote: "// Add some shipping charges after confirmation... eg.Rs.350+shipping(50)...total cost Rs.400...cash on delivery not available...only prepaid...",
         colours: [
