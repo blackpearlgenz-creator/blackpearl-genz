@@ -12,7 +12,7 @@ const DESIGNS = [
   {
     code: "BPG#001",
     name: "THALAPATHY BLASTU",
-    cardPrice: 400,
+    cardPrice: 350,
     description: "Thalapathy blastu design is fully customized design by blackpearl genz...",
     fits: [
       {
@@ -40,7 +40,7 @@ const DESIGNS = [
         priceTable: [
           {
             label: "All Sizes",
-            price: 400
+            price: 350
           }
         ]
       },
@@ -64,7 +64,7 @@ const DESIGNS = [
         priceTable: [
           {
             label: "All Sizes",
-            price: 500
+            price: 350
           }
         ]
       }
@@ -73,7 +73,7 @@ const DESIGNS = [
   {
     code: "BPG#002",
     name: "STR JESUS",
-    cardPrice: 500,
+    cardPrice: 400,
     description: "Oversized t shirt with custom dtf design...str jesus style design..\nPremium quality cloth...High quality inks...\nboth front and back side printed...all sizes available",
     fits: [
       {
@@ -93,7 +93,7 @@ const DESIGNS = [
         priceTable: [
           {
             label: "All Sizes",
-            price: 500
+            price: 400
           }
         ]
       }
@@ -102,7 +102,7 @@ const DESIGNS = [
   {
     code: "BPG#003",
     name: "AK RACER",
-    cardPrice: 500,
+    cardPrice: 400,
     description: "Oversized t shirt with custom dtf design...AK RACER design...\nPremium quality cloth...High quality inks...\nboth front and back side printed...all sizes available...",
     fits: [
       {
@@ -122,7 +122,7 @@ const DESIGNS = [
         priceTable: [
           {
             label: "All Sizes",
-            price: 500
+            price: 400
           }
         ]
       }
